@@ -1,0 +1,79 @@
+.dockerfile-generator {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #1e1e1e; /* Dark background color */
+  color: #d4d4d4; /* Text color */
+}
+
+body {
+  background-color: #1e1e1e; /* Background color for the entire page */
+}
+
+.dockerfile-generator h2 {
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+  color: #abb2bf; /* Text color for headings */
+}
+
+.input-group {
+  margin-bottom: 20px; /* Increase bottom margin for input groups */
+}
+
+.input-group label {
+  display: block;
+  margin-bottom: 5px;
+  color: #abb2bf; /* Text color for labels */
+}
+
+.input-group input,
+.input-group textarea {
+  width: 100%;
+  padding: 2px; /* Increase padding for inputs */
+  border: 1px solid #500404;
+  border-radius: 3px;
+  background-color: #2d2d2d; /* Darker input background color */
+  color: #d4d4d4; /* Text color */
+}
+
+.input-group textarea {
+  height: 100px;
+}
+
+button {
+  display: block;
+  width: 100%;
+  padding: 12px; /* Increase padding for buttons */
+  margin-top: 10px; /* Add margin to the top */
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+.preview-section {
+  margin-top: 20px;
+}
+
+.preview-section h3 {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+  color: #abb2bf; /* Text color for headings */
+}
+
+.preview-section pre {
+  background-color: #716666; /* Dark background color */
+  color: #b1aeae; /* Text color */
+  padding: 10px;
+  border-radius: 5px;
+  overflow-x: auto;
+  font-family: 'Courier New', monospace; /* Use a monospace font for code */
+}
