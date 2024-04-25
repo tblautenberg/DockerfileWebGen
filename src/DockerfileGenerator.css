@@ -6,6 +6,7 @@
   border-radius: 5px;
   background-color: #1e1e1e; /* Dark background color */
   color: #d4d4d4; /* Text color */
+  text-align: left; /* Align text to the left */
 }
 
 body {

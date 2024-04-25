@@ -4,41 +4,41 @@ import './DockerfileGenerator.css'; // Import CSS for styling
 function DockerfileGenerator() {
   const [version, setVersion] = useState('alpine');
   const [selectedOptions, setSelectedOptions] = useState([]);
+  const [workdir, setWorkdir] = useState(''); // State for WORKDIR
   const [customCommand, setCustomCommand] = useState(''); // State for custom command
-  const [dockerfilePreview, setDockerfilePreview] = useState('');
+  const [dockerfileContent, setDockerfileContent] = useState('');
 
   useEffect(() => {
     // Generate Dockerfile content based on user input
-    let dockerfileContent = `FROM ${version}:latest\n\n`; // Add a line break after FROM statement
-  
+    let content = `FROM ${version}:latest\n\n`; // Add a line break after FROM statement
+
     selectedOptions.forEach(option => {
-      dockerfileContent += `${option}\n\n`; // Add option followed by a newline
+      content += `${option}\n\n`; // Add option followed by a newline
     });
 
-    if (customCommand.trim() !== '') {
-      dockerfileContent += `${customCommand}\n\n`; // Add custom command followed by a newline
-    }
-  
-    setDockerfilePreview(dockerfileContent); // Update preview content
-  }, [version, selectedOptions, customCommand]); // Run this effect whenever inputs change
+    setDockerfileContent(content); // Update Dockerfile content
+  }, [version, selectedOptions]); // Run this effect whenever inputs change
 
   const handleOptionSelect = (e) => {
     const optionValue = e.target.value;
     setSelectedOptions(prevOptions => [...prevOptions, optionValue]); // Add the selected option to the array
   };
 
-  const handleDownload = () => {
-    // Generate Dockerfile content based on user input
-    let dockerfileContent = `FROM ${version}:latest\n`;
-
-    selectedOptions.forEach(option => {
-      dockerfileContent += `${option}\n`; // Add option followed by a newline
-    });
-
-    if (customCommand.trim() !== '') {
-      dockerfileContent += `${customCommand}\n`; // Add custom command followed by a newline
+  const handleAddWorkdir = () => {
+    if (workdir.trim() !== '') {
+      setSelectedOptions(prevOptions => [...prevOptions, `WORKDIR ${workdir}`]); // Add WORKDIR command to selected options
+      setWorkdir(''); // Reset WORKDIR field
     }
-    
+  };
+
+  const handleAddCustomCommand = () => {
+    if (customCommand.trim() !== '') {
+      setSelectedOptions(prevOptions => [...prevOptions, customCommand]); // Add custom command to selected options
+      setCustomCommand(''); // Reset custom command field
+    }
+  };
+
+  const handleDownload = () => {
     // Create a Blob and initiate download
     const blob = new Blob([dockerfileContent], { type: 'text/plain' });
     const url = URL.createObjectURL(blob);
@@ -53,8 +53,8 @@ function DockerfileGenerator() {
   const handleClear = () => {
     if (window.confirm('Are you sure you want to clear the current file?')) {
       setSelectedOptions([]);
-      setCustomCommand('');
-      setDockerfilePreview(`FROM ${version}:latest\n\n`);
+      setWorkdir(''); // Reset WORKDIR field
+      setCustomCommand(''); // Reset custom command field
     }
   };
 
@@ -70,6 +70,9 @@ function DockerfileGenerator() {
         >
           <option value="alpine">Alpine</option>
           <option value="debian">Debian</option>
+          <option value="ubuntu">Ubuntu</option>
+          <option value="centos">CentOS</option>
+          <option value="fedora">Fedora</option>
         </select>
       </div>
 
@@ -114,30 +117,41 @@ function DockerfileGenerator() {
       </div>
 
       <div className="input-group">
+        <label htmlFor="workdir">Set WORKDIR:</label>
+        <input
+          id="workdir"
+          type="text"
+          value={workdir}
+          onChange={(e) => setWorkdir(e.target.value)}
+          placeholder="Enter the WORKDIR path"
+        />
+        <button onClick={handleAddWorkdir}>Add</button>
+      </div>
+
+      <div className="input-group">
         <label htmlFor="customCommand">Custom Command:</label>
-        <textarea
+        <input
           id="customCommand"
+          type="text"
           value={customCommand}
           onChange={(e) => setCustomCommand(e.target.value)}
           placeholder="Enter your custom command here"
-          rows="5" // Set the number of rows
-          cols="50" // Set the number of columns
         />
+        <button onClick={handleAddCustomCommand}>Add</button>
       </div>
 
       <div className="button-group">
         <button onClick={handleDownload}>Download Dockerfile</button>
         <button onClick={handleClear}>Clear Current File</button>
       </div>
-      
+
       {/* Preview Section */}
       <div className="preview-section">
         <h3>Preview:</h3>
-        <pre>{dockerfilePreview}</pre>
+        <pre>{dockerfileContent}</pre>
       </div>
     </div>
   );
 }
 
 export default DockerfileGenerator;
-

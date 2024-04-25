@@ -1,5 +1,7 @@
 import React from 'react';
 import DockerfileGenerator from './DockerfileGenerator';
+import ParticlesComponent from './components/particles';
+import './App.css';
 
 function App() {
   return (
@@ -7,9 +9,13 @@ function App() {
       <header className="App-header">
         <h1>Dockerfile Generator</h1>
       </header>
-      <DockerfileGenerator />
+      <div className="container">
+        <DockerfileGenerator className="dockerfile-generator" />
+        <ParticlesComponent id="particles" />
+      </div>
     </div>
   );
 }
 
 export default App;
+ 
